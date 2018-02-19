@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+    <!-- This is a wide open CSP declaration. To lock this down for production, see below. -->
+    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" />
+    <!-- Good default declaration:
+    * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+    * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+    * Disables use of eval() and inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+        * Enable inline JS: add 'unsafe-inline' to default-src
+        * Enable eval(): add 'unsafe-eval' to default-src
+    * Create your own at http://cspisawesome.com
+    -->
+    <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: 'unsafe-inline' https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *" /> -->
+
+    <link rel="stylesheet" type="text/css" href="css/app.css" />
+    <title>Silent 911</title>
+</head>
+
+<body>
+    <div class="center-div">
+        <table style="width: 100%; height: 100%;">
+            <tr>
+                <td colspan="2" style="text-align: center;">
+                    <span style="font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; font-size: x-large; font-weight: normal; color: #FFFFFF">
+                        <br />
+                        <br />
+                        <strong>We were unable to our servers.</strong>
+                        <br />
+                        <br />
+                        We apologize for any inconvenience that this may have caused you, and we appreciate your understanding as we continue to improve our customer experience!
+            <br />
+                        <br />
+                        If this problem persists, please contact support.</span>
+                </td>
+            </tr>
+        </table>
+    </div>
+</body>
+
+</html>

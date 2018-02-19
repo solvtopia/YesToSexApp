@@ -1,0 +1,71 @@
+﻿<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+    <!-- This is a wide open CSP declaration. To lock this down for production, see below. -->
+    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" />
+    <!-- Good default declaration:
+    * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+    * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+    * Disables use of eval() and inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+        * Enable inline JS: add 'unsafe-inline' to default-src
+        * Enable eval(): add 'unsafe-eval' to default-src
+    * Create your own at http://cspisawesome.com
+    -->
+    <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: 'unsafe-inline' https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *" /> -->
+
+    <link rel="stylesheet" type="text/css" href="css/app.css" />
+    <link rel="stylesheet" href="css/jquery.motionCaptcha.0.2.css" />
+    <title>Silent 911</title>
+</head>
+
+<body style="background-color: #000;">
+    <div class="center-div">
+        <table style="width: 100%; height: 100%;">
+            <!--<tr>
+                <td colspan="2" style="text-align: center;"><span style="font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; font-size: x-large; font-weight: normal; color: #CC0000">Warning this is real!</span><br />
+                    <br />
+                    <span style="font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; font-size: x-large; font-weight: normal; color: #FFFFFF">Draw the shape below<br />
+                        with your finger to</span><br />
+                    <br />
+                    <img alt="Call 911" src="img/Call911.png" style="height: 50px;" /></td>
+            </tr>-->
+            <tr>
+                <td style="vertical-align: middle;">
+                    <div style="margin: 0 auto;">
+                        <form action="#" id="my-captcha-form" method="post">
+                            <div id="mc" style="text-align: center;">
+                                <canvas id="mc-canvas"></canvas>
+                            </div>
+                            <input type="hidden" id="fairly-unique-id" value="draw_da_shit" />
+                            <input type="hidden" id="emergencyType" value="" />
+                        </form>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <script src="js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+    <script src="js/jquery.placeholder.1.1.1.min.js" type="text/javascript"></script>
+    <script src="js/jquery.motionCaptcha.0.2.js"></script>
+    <script type="text/javascript">
+        app.initialize();
+    </script>
+    <script>
+        $(document).ready(function () {
+            // Do the biznizz:
+            $('#my-captcha-form').motionCaptcha({
+                shapes: ['circle']
+            });
+        });
+    </script>
+</body>
+
+</html>

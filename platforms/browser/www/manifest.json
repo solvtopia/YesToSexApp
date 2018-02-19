@@ -1,0 +1,12 @@
+{
+  "background_color": "#FFF",
+  "display": "standalone",
+  "name": "Silent 911",
+  "short_name": "Silent 911",
+  "version": "com.solvtopia.s911d",
+  "description": "Silent 911 Demo App",
+  "author": "Solvtopia, LLC",
+  "icons": [],
+  "orientation": "portrait",
+  "start_url": "index.html"
+}

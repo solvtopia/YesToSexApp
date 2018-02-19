@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+    <!-- This is a wide open CSP declaration. To lock this down for production, see below. -->
+    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" />
+    <!-- Good default declaration:
+    * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+    * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+    * Disables use of eval() and inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+        * Enable inline JS: add 'unsafe-inline' to default-src
+        * Enable eval(): add 'unsafe-eval' to default-src
+    * Create your own at http://cspisawesome.com
+    -->
+    <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: 'unsafe-inline' https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *" /> -->
+
+    <link rel="stylesheet" type="text/css" href="css/app.css" />
+    <title>Silent 911</title>
+
+    <style>
+        body {
+            background-image: url(img/emergency_text.png);
+            background-size: contain; /* <------ */
+            background-repeat: no-repeat;
+            background-position: center center; /* optional, center the image */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="center-div">
+        <!-- http://www.holshousersoftware.com/glass/ -->
+        <table style="width: 100%; height: 100%; background-color: rgba(255, 255, 255, .5); border-radius: 40px;" cellpadding="20" cellspacing="0">
+            <tr>
+                <td style="text-align: left; vertical-align: top;">
+                    <a href="pattern_draw.html?t=police">
+                        <img alt="Police" src="img/type_police1.png" style="width: 70%;" /></a></td>
+                <td style="text-align: right; vertical-align: top;">
+                    <a href="pattern_draw.html?t=fire">
+                        <img alt="Fire" src="img/type_fire1.png" style="width: 70%;" /></a></td>
+            </tr>
+            <tr>
+                <td style="text-align: left; vertical-align: bottom;">
+                    <a href="pattern_draw.html?t=medical">
+                        <img alt="Medical" src="img/type_medical1.png" style="width: 70%;" /></a></td>
+                <td style="text-align: right; vertical-align: bottom;">
+                    <a href="pattern_draw.html?t=stranger">
+                        <img alt="Stranger" src="img/type_stranger1.png" style="width: 70%;" /></a></td>
+            </tr>
+        </table>
+    </div>
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+</body>
+
+</html>
