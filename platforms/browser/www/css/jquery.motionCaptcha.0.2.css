@@ -9,8 +9,8 @@
 
 /* The canvas: */
 #mc-canvas {
-    width: 170px; /* For best results, set width to between 210px and 240px */
-    height: 170px; /* For best results, set height to between 140px and 170px */
+    width: 225px; /* For best results, set width to between 210px and 240px */
+    height: 225px; /* For best results, set height to between 140px and 170px */
     background: #000 -9999px -9999px no-repeat;
     background-image: url('../img/source.gif') !important;
     margin: 0 auto;
@@ -26,15 +26,15 @@
     }
 
     #mc-canvas.stranger {
-        background-position: -680px 0px
+        background-position: -900px 0px
     }
 
     #mc-canvas.fire {
-        background-position: -340px 0px;
+        background-position: -450px 0px;
     }
 
     #mc-canvas.medical {
-        background-position: -510px 0px
+        background-position: -675px 0px
     }
 
     /*#mc-canvas.circle       { background-position:-600px   10px }*/

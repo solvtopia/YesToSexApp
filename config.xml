@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="com.safesexconsentinc.yestosex" version="1.5.3.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
-  <name>YES to SEX</name>
-  <description>YES to SEX is an app that seeks to verify user consent to sexual activity from both consenting individuals. The purpose is to assist in complying with new "Yes means Yes" laws that require individuals get proof that both parties consent prior to sexual activity.</description>
+    <name>YES to SEX</name>
+    <description>YES to SEX is an app that seeks to verify user consent to sexual activity from both consenting individuals. The purpose is to assist in complying with new "Yes means Yes" laws that require individuals get proof that both parties consent prior to sexual activity.</description>
     <author email="support@solvtopia.com" href="http://www.solvtopia.com">Solvtopia, LLC</author>
     <content src="index.html" />
     <preference name="DisallowOverscroll" value="true" />
@@ -112,7 +112,4 @@
     </platform>
     <engine name="browser" spec="~5.0.3" />
     <plugin name="cordova-plugin-file-transfer" spec="~1.5.1" />
-    <plugin name="mx.ferreyra.callnumber" spec="~0.0.2" />
-    <plugin name="cordova-plugin-sim" spec="~1.3.3" />
-    <plugin name="cordova-plugin-tts" spec="~0.2.3" />
 </widget>

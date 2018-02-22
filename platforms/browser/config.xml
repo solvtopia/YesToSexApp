@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.solvtopia.s911d" version="2.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1.0">
-    <name>Silent 911</name>
-    <description>Silent 911 Demo App</description>
+<widget id="com.safesexconsentinc.yestosex" version="1.5.3.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1.0">
+    <name>YES to SEX</name>
+    <description>YES to SEX is an app that seeks to verify user consent to sexual activity from both consenting individuals. The purpose is to assist in complying with new "Yes means Yes" laws that require individuals get proof that both parties consent prior to sexual activity.</description>
     <author email="support@solvtopia.com" href="http://www.solvtopia.com">Solvtopia, LLC</author>
     <content src="index.html" />
     <access origin="*" />

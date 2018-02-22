@@ -66,54 +66,11 @@ function onGpsSuccess(position) {
     setUrl();
 }
 
-function onSimSuccess(result) {
-    localStorage.setItem('ss_phoneNumber', result.phoneNumber);
-    console.log('SIM Success');
-}
-
-function onCallSuccess(result) {
-    console.log('Call Success');
-}
-
-
-// Android only: check sim permission
-function hasSimReadPermission() {
-    window.plugins.sim.hasReadPermission(successReadPermissionCallback, errorReadPermissionCallback);
-}
-
-// Android only: request sim permission
-function requestSimReadPermission() {
-    window.plugins.sim.requestReadPermission(successRequestReadPermissionCallback, errorRequestReadPermissionCallback);
-}
-
-function successReadPermissionCallback() {
-    localStorage.setItem('ss_phoneNumber', 'Unavailable');
-    window.plugins.sim.getSimInfo(onSimSuccess, onSimError);
-}
-
-function successRequestReadPermissionCallback() {
-    successReadPermissionCallback();
-}
-
 function onGpsError(error) {
     localStorage.setItem('ss_gpsLat', '-1');
     localStorage.setItem('ss_gpsLon', '-1');
     console.log('GPS Error: ' + error.code + ': ' + error.message);
 }
-
-function onSimError(error) {
-    localStorage.setItem('ss_phoneNumber', 'Unavailable');
-    console.log('SIM Error: ' + error.code + ': ' + error.message);
-}
-
-function onCallError(result) {
-    console.log('Call Error: ' + result);
-}
-
-function errorReadPermissionCallback() {
-    requestSimReadPermission();
-}
-function errorRequestReadPermissionCallback() { }
 
 function getAppSettings(setting, forceRefresh) {
     // gets a setting from the settings string
@@ -127,7 +84,7 @@ function getAppSettings(setting, forceRefresh) {
     if (forceRefresh) {
         // gets the app settings from the server
         localStorage.setItem('ss_appSettings', '');
-        var rq = createWebRequest('http://www.solvtopia.com/safelysocial.asp?action=settings&deviceid=' + localStorage.getItem('ss_deviceId') + '&platform=' + localStorage.getItem('ss_devicePlatform'));
+        var rq = createWebRequest('http://www.solvtopia.com/yestosex.asp?action=settings&deviceid=' + localStorage.getItem('ss_deviceId') + '&platform=' + localStorage.getItem('ss_devicePlatform'));
         if (rq) {
             rq.onload = function () {
                 var rs = rq.responseText;
@@ -181,11 +138,7 @@ function setUrl() {
     var img = document.body.appendChild(document.createElement("img"));
     img.onload = function () {
         loaded = true;
-        //if (localStorage.getItem('ss_deviceLoggedIn') !== null) {
-        //    // if the user has already logged in before then send them straight to the home
-        //    window.location.href = 'switchboard.html';
-        //} else { window.location.href = 'login.html'; }
-        window.location.href = 'switchboard.html';
+        window.location.href = 'home.html';
     };
     img.onerror = function () {
         loaded = false;
@@ -196,28 +149,11 @@ function setUrl() {
         if (loaded === false) {
             window.location.href = 'unavailable.html';
         } else {
-            //if (localStorage.getItem('ss_deviceLoggedIn') !== null) {
-            //    // if the user has already logged in before then send them straight to the home
-            //    window.location.href = 'switchboard.html';
-            //} else { window.location.href = 'login.html'; }
-            window.location.href = 'switchboard.html';
+            window.location.href = 'home.html';
         }
     }, time);
 
     img.src = "http://solvtopia.com/images/empty.png?" + Math.random();
-}
-
-function logCall(a) {
-    var rq = createWebRequest('http://www.solvtopia.com/safelysocial.asp?action=log&a=' + a + '&n=' + localStorage.getItem('ss_phoneNumber') + '&t=' + getParameterByName('t') + '&lat=' + localStorage.getItem('ss_gpsLat') + '&lon=' + localStorage.getItem('ss_gpsLon') + '&deviceid=' + localStorage.getItem('ss_deviceId') + '&platform=' + localStorage.getItem('ss_devicePlatform'));
-    if (rq) {
-        rq.onload = function () {
-            var rs = rq.responseText;
-
-            console.log('Call action (' + a + ') from GPS ' + localStorage.getItem('ss_gpsLat') + ', ' + localStorage.getItem('ss_gpsLon'));
-        };
-        //rq.onreadystatechange = handler;
-        rq.send();
-    }
 }
 
 

@@ -63,15 +63,6 @@
     },
     "cordova-plugin-file-transfer": {
       "PACKAGE_NAME": "com.safesexconsentinc.safelysocial"
-    },
-    "mx.ferreyra.callnumber": {
-      "PACKAGE_NAME": "com.safesexconsentinc.safelysocial"
-    },
-    "cordova-plugin-sim": {
-      "PACKAGE_NAME": "com.safesexconsentinc.safelysocial"
-    },
-    "cordova-plugin-tts": {
-      "PACKAGE_NAME": "com.safesexconsentinc.safelysocial"
     }
   },
   "dependent_plugins": {

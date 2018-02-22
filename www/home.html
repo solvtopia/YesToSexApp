@@ -24,8 +24,8 @@
 
     <style>
         body {
-            background-image: url(img/emergency_text.png);
-            background-size: contain; /* <------ */
+            background-image: url(img/StartBackGround_New.png);
+            background-size: cover; /* <------ */
             background-repeat: no-repeat;
             background-position: center center; /* optional, center the image */
         }
@@ -34,28 +34,85 @@
 
 <body>
     <div class="center-div">
-        <!-- http://www.holshousersoftware.com/glass/ -->
-        <table style="width: 100%; height: 100%; background-color: rgba(255, 255, 255, .5); border-radius: 40px;" cellpadding="20" cellspacing="0">
+        <!-- http://www.holshousersoftware.com/glass/ 
+             http://buttonoptimizer.com/
+            -->
+        <table style="width: 100%;" cellpadding="1" cellspacing="2">
             <tr>
-                <td style="text-align: left; vertical-align: top;">
-                    <a href="pattern_draw.html?t=police">
-                        <img alt="Police" src="img/type_police1.png" style="width: 90%;" /></a></td>
-                <td style="text-align: right; vertical-align: top;">
-                    <a href="pattern_draw.html?t=fire">
-                        <img alt="Fire" src="img/type_fire1.png" style="width: 90%;" /></a></td>
+                <td style="text-align: center;">
+                    <img alt="" src="img/SYTS_Logo.png" style="width: 46%" /></td>
             </tr>
             <tr>
-                <td style="text-align: left; vertical-align: bottom;">
-                    <a href="pattern_draw.html?t=medical">
-                        <img alt="Medical" src="img/type_medical1.png" style="width: 90%;" /></a></td>
-                <td style="text-align: right; vertical-align: bottom;">
-                    <a href="pattern_draw.html?t=stranger">
-                        <img alt="Stranger" src="img/type_stranger1.png" style="width: 90%;" /></a></td>
+                <td style="text-align: center; font-size: x-large;">Ready to safely consent?<br />
+                    <br />
+                </td>
+            </tr>
+        </table>
+        <div id="divTOS">
+            <table style="width: 100%;" cellpadding="1" cellspacing="2">
+                <tr>
+                    <td style="vertical-align: top;">
+                        <label class='switch'>
+                            <input type="checkbox" id='chkAcceptTOS' /><span class='slider round'></span></label>
+                    </td>
+                    <td style="vertical-align: top; padding-left: 20px;">Read and accept Yes to Sex's <a href="privacypolicy.html" class="linkButton">TERMS OF USE including their PRIVACY POLICY</a><br />
+                        <br />
+                        <br />
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <table style="width: 100%;" cellpadding="1" cellspacing="2">
+            <tr>
+                <td style="text-align: center;">
+                    <table align="center">
+                        <tr>
+                            <td style="text-align: left; width: 65px;">
+                                <img src="img/single-mobile.png" style="height: 45px;" /></td>
+                            <td style="text-align: left;">
+                                <a href="javascript:checkTOS('mood_single.html');" class="linkButton">
+                                    <img src="img/button_yes_one_phone.png" /></a></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align: center;">
+                    <table align="center">
+                        <tr>
+                            <td style="text-align: left; width: 65px;">
+                                <img src="img/double-mobile.png" style="height: 45px;" /></td>
+                            <td style="text-align: left;">
+                                <a href="javascript:checkTOS('mood_multiple.html');" class="linkButton">
+                                    <img src="img/button_yes_multiple_phones.png" /></a></td>
+                        </tr>
+                    </table>
+                </td>
             </tr>
         </table>
     </div>
     <script type="text/javascript" src="cordova.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
+    <script type="text/javascript">
+        (function () {
+            if (localStorage.getItem('ss_TOSAccepted') !== null) {
+                // TOS already accepted on this device so check the box and hide it
+                document.getElementById('chkAcceptTOS').checked = true;
+                document.getElementById('divTOS').style.display = 'none';
+            } else {
+                document.getElementById('chkAcceptTOS').checked = false;
+}
+        })();
+
+        function checkTOS(url) {
+            var chk = document.getElementById('chkAcceptTOS');
+
+            if (!chk.checked || localStorage.getItem('ss_TOSAccepted') == null) {
+                // if the check box is not checked or the accepted flag has not been set for this device
+                alert('You must read the TERMS OF USE and PRIVACY POLICY first.');
+            } else { window.location.href = url; }
+        }
+    </script>
 </body>
 
 </html>

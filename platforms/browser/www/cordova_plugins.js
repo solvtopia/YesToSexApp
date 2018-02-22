@@ -602,30 +602,6 @@ module.exports = [
             "navigator.notification",
             "navigator"
         ]
-    },
-    {
-        "file": "plugins/cordova-plugin-sim/www/sim.js",
-        "id": "cordova-plugin-sim.Sim",
-        "pluginId": "cordova-plugin-sim",
-        "merges": [
-            "window.plugins.sim"
-        ]
-    },
-    {
-        "file": "plugins/mx.ferreyra.callnumber/www/CallNumber.js",
-        "id": "mx.ferreyra.callnumber.CallNumber",
-        "pluginId": "mx.ferreyra.callnumber",
-        "clobbers": [
-            "call"
-        ]
-    },
-    {
-        "file": "plugins/cordova-plugin-tts/www/tts.js",
-        "id": "cordova-plugin-tts.tts",
-        "pluginId": "cordova-plugin-tts",
-        "clobbers": [
-            "TTS"
-        ]
     }
 ];
 module.exports.metadata = 
@@ -650,10 +626,7 @@ module.exports.metadata =
     "cordova-plugin-splashscreen": "3.2.2",
     "cordova-plugin-statusbar": "2.1.3",
     "cordova-plugin-vibration": "2.1.6",
-    "cordova-plugin-whitelist": "1.2.2",
-    "cordova-plugin-sim": "1.3.3",
-    "mx.ferreyra.callnumber": "0.0.2",
-    "cordova-plugin-tts": "0.2.3"
+    "cordova-plugin-whitelist": "1.2.2"
 }
 // BOTTOM OF METADATA
 });

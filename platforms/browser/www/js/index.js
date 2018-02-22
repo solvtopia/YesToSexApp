@@ -127,7 +127,7 @@ function getAppSettings(setting, forceRefresh) {
     if (forceRefresh) {
         // gets the app settings from the server
         localStorage.setItem('ss_appSettings', '');
-        var rq = createWebRequest('http://www.solvtopia.com/safelysocial.asp?action=settings&deviceid=' + localStorage.getItem('ss_deviceId') + '&platform=' + localStorage.getItem('ss_devicePlatform'));
+        var rq = createWebRequest('http://www.solvtopia.com/yestosex.asp?action=settings&deviceid=' + localStorage.getItem('ss_deviceId') + '&platform=' + localStorage.getItem('ss_devicePlatform'));
         if (rq) {
             rq.onload = function () {
                 var rs = rq.responseText;
@@ -181,11 +181,7 @@ function setUrl() {
     var img = document.body.appendChild(document.createElement("img"));
     img.onload = function () {
         loaded = true;
-        //if (localStorage.getItem('ss_deviceLoggedIn') !== null) {
-        //    // if the user has already logged in before then send them straight to the home
-        //    window.location.href = 'switchboard.html';
-        //} else { window.location.href = 'login.html'; }
-        window.location.href = 'switchboard.html';
+        window.location.href = 'home.html';
     };
     img.onerror = function () {
         loaded = false;
@@ -196,28 +192,11 @@ function setUrl() {
         if (loaded === false) {
             window.location.href = 'unavailable.html';
         } else {
-            //if (localStorage.getItem('ss_deviceLoggedIn') !== null) {
-            //    // if the user has already logged in before then send them straight to the home
-            //    window.location.href = 'switchboard.html';
-            //} else { window.location.href = 'login.html'; }
-            window.location.href = 'switchboard.html';
+            window.location.href = 'home.html';
         }
     }, time);
 
     img.src = "http://solvtopia.com/images/empty.png?" + Math.random();
-}
-
-function logCall(a) {
-    var rq = createWebRequest('http://www.solvtopia.com/safelysocial.asp?action=log&a=' + a + '&n=' + localStorage.getItem('ss_phoneNumber') + '&t=' + getParameterByName('t') + '&lat=' + localStorage.getItem('ss_gpsLat') + '&lon=' + localStorage.getItem('ss_gpsLon') + '&deviceid=' + localStorage.getItem('ss_deviceId') + '&platform=' + localStorage.getItem('ss_devicePlatform'));
-    if (rq) {
-        rq.onload = function () {
-            var rs = rq.responseText;
-
-            console.log('Call action (' + a + ') from GPS ' + localStorage.getItem('ss_gpsLat') + ', ' + localStorage.getItem('ss_gpsLon'));
-        };
-        //rq.onreadystatechange = handler;
-        rq.send();
-    }
 }
 
 
