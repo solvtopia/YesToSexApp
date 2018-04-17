@@ -44,76 +44,33 @@ function setupTheApp() {
     }
 
     // get the gps location
-    localStorage.setItem('ss_gpsLat', '-1');
-    localStorage.setItem('ss_gpsLon', '-1');
+    localStorage.setItem('yts_gpsLat', '-1');
+    localStorage.setItem('yts_gpsLon', '-1');
     navigator.geolocation.getCurrentPosition(onGpsSuccess, onGpsError, { enableHighAccuracy: true });
 }
 
 function onGpsSuccess(position) {
-    localStorage.setItem('ss_gpsLat', position.coords.latitude);
-    localStorage.setItem('ss_gpsLon', position.coords.longitude);
+    localStorage.setItem('yts_gpsLat', position.coords.latitude);
+    localStorage.setItem('yts_gpsLon', position.coords.longitude);
     console.log('GPS Success');
 
     // finish setting up the app
-    if (localStorage.getItem('ss_deviceId') === null) {
+    if (localStorage.getItem('yts_deviceId') === null) {
         var guid = createGuid();
-        localStorage.setItem('ss_deviceId', guid);
+        localStorage.setItem('yts_deviceId', guid);
     }
-    localStorage.setItem('ss_devicePlatform', getPlatform());
+    localStorage.setItem('yts_devicePlatform', getPlatform());
 
     getAppSettings('', true);
 
     setUrl();
 }
 
-function onSimSuccess(result) {
-    localStorage.setItem('ss_phoneNumber', result.phoneNumber);
-    console.log('SIM Success');
-}
-
-function onCallSuccess(result) {
-    console.log('Call Success');
-}
-
-
-// Android only: check sim permission
-function hasSimReadPermission() {
-    window.plugins.sim.hasReadPermission(successReadPermissionCallback, errorReadPermissionCallback);
-}
-
-// Android only: request sim permission
-function requestSimReadPermission() {
-    window.plugins.sim.requestReadPermission(successRequestReadPermissionCallback, errorRequestReadPermissionCallback);
-}
-
-function successReadPermissionCallback() {
-    localStorage.setItem('ss_phoneNumber', 'Unavailable');
-    window.plugins.sim.getSimInfo(onSimSuccess, onSimError);
-}
-
-function successRequestReadPermissionCallback() {
-    successReadPermissionCallback();
-}
-
 function onGpsError(error) {
-    localStorage.setItem('ss_gpsLat', '-1');
-    localStorage.setItem('ss_gpsLon', '-1');
+    localStorage.setItem('yts_gpsLat', '-1');
+    localStorage.setItem('yts_gpsLon', '-1');
     console.log('GPS Error: ' + error.code + ': ' + error.message);
 }
-
-function onSimError(error) {
-    localStorage.setItem('ss_phoneNumber', 'Unavailable');
-    console.log('SIM Error: ' + error.code + ': ' + error.message);
-}
-
-function onCallError(result) {
-    console.log('Call Error: ' + result);
-}
-
-function errorReadPermissionCallback() {
-    requestSimReadPermission();
-}
-function errorRequestReadPermissionCallback() { }
 
 function getAppSettings(setting, forceRefresh) {
     // gets a setting from the settings string
@@ -126,22 +83,22 @@ function getAppSettings(setting, forceRefresh) {
 
     if (forceRefresh) {
         // gets the app settings from the server
-        localStorage.setItem('ss_appSettings', '');
-        var rq = createWebRequest('http://www.solvtopia.com/yestosex.asp?action=settings&deviceid=' + localStorage.getItem('ss_deviceId') + '&platform=' + localStorage.getItem('ss_devicePlatform'));
+        localStorage.setItem('yts_appSettings', '');
+        var rq = createWebRequest('http://www.solvtopia.com/yestosex.asp?action=settings&deviceid=' + localStorage.getItem('yts_deviceId') + '&platform=' + localStorage.getItem('yts_devicePlatform'));
         if (rq) {
             rq.onload = function () {
                 var rs = rq.responseText;
                 rs = rs.substr(0, rs.indexOf('<') - 1);
-                localStorage.setItem('ss_appSettings', rs);
+                localStorage.setItem('yts_appSettings', rs);
 
                 // pull the named setting from the settings string
                 if (setting !== '') { retVal = getSettingByName(rs, setting); }
 
-                console.log('Platform: ' + localStorage.getItem('ss_devicePlatform'));
-                console.log('DeviceId: ' + localStorage.getItem('ss_deviceId'));
-                console.log('GPS: ' + localStorage.getItem('ss_gpsLat') + ', ' + localStorage.getItem('ss_gpsLon'));
-                console.log('AppSettings: ' + localStorage.getItem('ss_appSettings'));
-                console.log('PhoneNumber: ' + localStorage.getItem('ss_phoneNumber'));
+                console.log('Platform: ' + localStorage.getItem('yts_devicePlatform'));
+                console.log('DeviceId: ' + localStorage.getItem('yts_deviceId'));
+                console.log('GPS: ' + localStorage.getItem('yts_gpsLat') + ', ' + localStorage.getItem('yts_gpsLon'));
+                console.log('AppSettings: ' + localStorage.getItem('yts_appSettings'));
+                console.log('PhoneNumber: ' + localStorage.getItem('yts_phoneNumber'));
             };
             //rq.onreadystatechange = handler;
             rq.send();
@@ -149,7 +106,7 @@ function getAppSettings(setting, forceRefresh) {
     }
 
     // pull the named setting from the settings string
-    if (setting !== '' && !forceRefresh) { retVal = getSettingByName(localStorage.getItem('ss_appSettings'), setting); }
+    if (setting !== '' && !forceRefresh) { retVal = getSettingByName(localStorage.getItem('yts_appSettings'), setting); }
 
     return retVal;
 }

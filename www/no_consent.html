@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+    <!-- This is a wide open CSP declaration. To lock this down for production, see below. -->
+    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" />
+    <!-- Good default declaration:
+    * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+    * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+    * Disables use of eval() and inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+        * Enable inline JS: add 'unsafe-inline' to default-src
+        * Enable eval(): add 'unsafe-eval' to default-src
+    * Create your own at http://cspisawesome.com
+    -->
+    <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: 'unsafe-inline' https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *" /> -->
+
+    <link rel="stylesheet" type="text/css" href="css/app.css" />
+    <title>YTS</title>
+
+    <style>
+        body {
+            background-image: url(img/StartBackGround_New.png);
+            background-size: cover; /* <------ */
+            background-repeat: no-repeat;
+            background-position: center center; /* optional, center the image */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="center-div">
+        <!-- http://www.holshousersoftware.com/glass/ 
+             http://buttonoptimizer.com/
+            -->
+        <table style="width: 100%;" cellpadding="1" cellspacing="2">
+            <tr>
+                <td style="text-align: center;">
+                    <img alt="" src="img/SYTS_Logo.png" style="width: 46%" /></td>
+            </tr>
+            <tr>
+                <td style="text-align: center; font-size: x-large;"><span id="lblMessage"></span>
+                    <br />
+                    <br />
+                </td>
+            </tr>
+        </table>
+        <table style="width: 100%;" cellpadding="1" cellspacing="2">
+            <tr>
+                <td style="text-align: center;">
+                    <a href="javascript:StartAppOver();" class="linkButton">
+                        <img src="img/button_start_over.png" /></a></td>
+            </tr>
+            <tr>
+                <td style="text-align: center;">
+                    <a href="javascript:navigator.app.exitApp();" class="linkButton">
+                        <img src="img/button_close_the_app.png" /></a></td>
+            </tr>
+        </table>
+    </div>
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+    <script type="text/javascript">
+        (function () {
+            switch (getParameterByName('t').toLowerCase()) {
+                case 'consent':
+                    document.getElementById('lblMessage').innerText = 'One or more partners failed to say YES to SEX.';
+                    break;
+                case 'facts':
+                    document.getElementById('lblMessage').innerText = 'You have failed to agree that both parties are willing to consent.';
+                    break;
+                case 'tos':
+                    document.getElementById('lblMessage').innerText = 'You have failed to read and accept the TERMS OF USE and PRIVACY POLICY.';
+                    break;
+                case 'nos':
+                    document.getElementById('lblMessage').innerText = 'One or more partners has indicated they are "Not Interested" and cannot continue.';
+                    break;
+                case 'nom':
+                    document.getElementById('lblMessage').innerText = 'You have indicated you are "Not Interested" and cannot continue.';
+                    break;
+            }
+        })();
+
+        function StartAppOver() {
+            localStorage.removeItem('yts_TOSAccepted');
+            window.location.href = 'home.html';
+        }
+    </script>
+</body>
+
+</html>

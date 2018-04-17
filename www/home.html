@@ -20,7 +20,7 @@
     <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: 'unsafe-inline' https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *" /> -->
 
     <link rel="stylesheet" type="text/css" href="css/app.css" />
-    <title>Silent 911</title>
+    <title>YTS</title>
 
     <style>
         body {
@@ -53,7 +53,7 @@
                 <tr>
                     <td style="vertical-align: top;">
                         <label class='switch'>
-                            <input type="checkbox" id='chkAcceptTOS' /><span class='slider round'></span></label>
+                            <input type="checkbox" id='chkAcceptTOS' onchange="javascript:window.location.href='privacypolicy.html';" /><span class='slider round'></span></label>
                     </td>
                     <td style="vertical-align: top; padding-left: 20px;">Read and accept Yes to Sex's <a href="privacypolicy.html" class="linkButton">TERMS OF USE including their PRIVACY POLICY</a><br />
                         <br />
@@ -65,12 +65,12 @@
         <table style="width: 100%;" cellpadding="1" cellspacing="2">
             <tr>
                 <td style="text-align: center;">
-                    <table align="center">
+                    <table align="center" style="width: 315px;">
                         <tr>
-                            <td style="text-align: left; width: 65px;">
+                            <td style="text-align: left; width: 50px;">
                                 <img src="img/single-mobile.png" style="height: 45px;" /></td>
                             <td style="text-align: left;">
-                                <a href="javascript:checkTOS('mood_single.html');" class="linkButton">
+                                <a href="javascript:checkTOS('moods_single.html?t=single');" class="linkButton">
                                     <img src="img/button_yes_one_phone.png" /></a></td>
                         </tr>
                     </table>
@@ -78,13 +78,27 @@
             </tr>
             <tr>
                 <td style="text-align: center;">
-                    <table align="center">
+                    <table align="center" style="width: 315px;">
                         <tr>
-                            <td style="text-align: left; width: 65px;">
+                            <td style="text-align: left; width: 50px;">
                                 <img src="img/double-mobile.png" style="height: 45px;" /></td>
                             <td style="text-align: left;">
-                                <a href="javascript:checkTOS('mood_multiple.html');" class="linkButton">
+                                <a href="javascript:checkTOS('moods_multiple.html?t=multiple');" class="linkButton">
                                     <img src="img/button_yes_multiple_phones.png" /></a></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <br />
+                    <br />
+                    <table>
+                        <tr>
+                            <td>
+                                <label class='switch'>
+                                    <input type="checkbox" id='chkPreview' /><span class='slider round'></span></label></td>
+                            <td style="padding-left: 10px;">Preview Only</td>
                         </tr>
                     </table>
                 </td>
@@ -95,22 +109,22 @@
     <script type="text/javascript" src="js/index.js"></script>
     <script type="text/javascript">
         (function () {
-            if (localStorage.getItem('ss_TOSAccepted') !== null) {
+            if (localStorage.getItem('yts_TOSAccepted') !== null) {
                 // TOS already accepted on this device so check the box and hide it
                 document.getElementById('chkAcceptTOS').checked = true;
                 document.getElementById('divTOS').style.display = 'none';
             } else {
                 document.getElementById('chkAcceptTOS').checked = false;
-}
+            }
         })();
 
         function checkTOS(url) {
             var chk = document.getElementById('chkAcceptTOS');
 
-            if (!chk.checked || localStorage.getItem('ss_TOSAccepted') == null) {
+            if (!chk.checked || localStorage.getItem('yts_TOSAccepted') == null) {
                 // if the check box is not checked or the accepted flag has not been set for this device
                 alert('You must read the TERMS OF USE and PRIVACY POLICY first.');
-            } else { window.location.href = url; }
+            } else { window.location.href = url + '&preview=' + document.getElementById('chkPreview').checked; }
         }
     </script>
 </body>

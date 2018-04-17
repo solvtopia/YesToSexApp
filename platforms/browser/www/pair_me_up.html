@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+    <!-- This is a wide open CSP declaration. To lock this down for production, see below. -->
+    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" />
+    <!-- Good default declaration:
+    * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+    * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+    * Disables use of eval() and inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+        * Enable inline JS: add 'unsafe-inline' to default-src
+        * Enable eval(): add 'unsafe-eval' to default-src
+    * Create your own at http://cspisawesome.com
+    -->
+    <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: 'unsafe-inline' https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *" /> -->
+
+    <link rel="stylesheet" type="text/css" href="css/app.css" />
+    <title>YTS</title>
+
+    <style>
+        body {
+            background-image: url(img/Pair_BG.jpg);
+            background-size: cover; /* <------ */
+            background-repeat: no-repeat;
+            background-position: center center; /* optional, center the image */
+        }
+
+        .container {
+            position: relative;
+            text-align: center;
+        }
+
+        .centered {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="center-div">
+        <table style="width: 100%;" cellpadding="1" cellspacing="2">
+            <tr style="background-color: #1b314b;">
+                <td style="vertical-align: bottom; height: 30px; width: 50px;">
+                    <a href="javascript:GoBack();" class="linkButton">
+                        <img src="img/backarrow.png" style="height: 30px;" /></a>
+                </td>
+                <td style="text-align: center;">
+                    <span id="lblPartner1Mood"></span>
+                    <br />
+                    <span id="lblProtection"></span></td>
+            </tr>
+            <tr>
+                <td colspan="2" style="height: 20px;">&nbsp;</td>
+            </tr>
+            <tr>
+                <td colspan="2" style="vertical-align: top; text-align: center;">Connect your consents<br />
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" style="vertical-align: top; text-align: center; font-weight: bold; color: #1b314b;">To connect your consents,<br />
+                    Point your camera at your partner&#39;s QR Code.<br />
+                    <br />
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" style="vertical-align: top; text-align: center; font-weight: lighter;">
+                    <div class="container">
+                        <div class="centered">
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <div id="qrcode" onclick="ScanResults()"></div>
+                            <span id="lblQRString" style="display: none;"></span>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+    <script type="text/javascript" src="js/qrcode.min.js"></script>
+
+    <script type="text/javascript">
+        (function () {
+            document.getElementById('lblPartner1Mood').innerText = GetMood(1, localStorage.getItem('yts_Partner1Mood'));
+            document.getElementById('lblProtection').innerText = GetProtection(localStorage.getItem('yts_Protection'));
+
+            // generate the QR code
+            // deviceId|Mood|Gender|Protection
+            var qrString = localStorage.getItem('yts_deviceId') + '|' + localStorage.getItem('yts_Partner1Mood') + '|' + localStorage.getItem('yts_Partner1Sex') + '|' + localStorage.getItem('yts_Protection');
+            var qrcode = new QRCode(document.getElementById('qrcode'), {
+                text: qrString,
+                width: 160,
+                height: 160,
+                colorDark: "#000000",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H
+            });
+            document.getElementById('lblQRString').innerText = qrString;
+
+            setTimeout(function () { StartBarcodeScanner(); }, 2000);
+        })();
+
+        function StartBarcodeScanner() {
+            // start the scanner
+            cordova.plugins.barcodeScanner.scan(
+                function (result) {
+                    window.location.href = 'scan_results.html?t=' + getParameterByName('t') + '&preview=' + getParameterByName('preview') + '&qr=' + result.text;
+                    //alert("We got a barcode\n" +
+                    //    "Result: " + result.text + "\n" +
+                    //    "Format: " + result.format + "\n" +
+                    //    "Cancelled: " + result.cancelled);
+                },
+                function (error) {
+                    alert("Scanning failed: " + error);
+                },
+                {
+                    preferFrontCamera: false, // iOS and Android
+                    showFlipCameraButton: true, // iOS and Android
+                    showTorchButton: true, // iOS and Android
+                    torchOn: false, // Android, launch with the torch switched on (if available)
+                    saveHistory: true, // Android, save scan history (default false)
+                    prompt: "Place a barcode inside the scan area", // Android
+                    resultDisplayDuration: 0, // Android, display scanned text for X ms. 0 suppresses it entirely, default 1500
+                    formats: "QR_CODE,PDF_417", // default: all but PDF_417 and RSS_EXPANDED
+                    orientation: "portrait", // Android only (portrait|landscape), default unset so it rotates with the device
+                    disableAnimations: true, // iOS
+                    disableSuccessBeep: false // iOS and Android
+                }
+            );
+        }
+
+        function GoBack() {
+            var url = '';
+            if (getParameterByName('t') == 'single') {
+                url = 'moods_single.html';
+            } else { url = 'moods_multiple.html'; }
+            window.location.href = url + '?t=' + getParameterByName('t') + '&preview=' + getParameterByName('preview');
+        }
+
+        function GetMood(partner, mood) {
+            switch (mood) {
+                case '1':
+                    if (partner == 1) { return 'Turned On' } else { return 'Heavenly' }
+                    break;
+                case '2':
+                    if (partner == 1) { return 'Cuddly' } else { return 'Happy' }
+                    break;
+                case '3':
+                    if (partner == 1) { return 'Playful' } else { return 'Seductive' }
+                    break;
+                case '4':
+                    if (partner == 1) { return 'Not Interested' } else { return 'Not Interested' }
+                    break;
+            }
+        }
+
+        function GetProtection(t) {
+            switch (t) {
+                case '1':
+                    return 'Condom & Birth Control';
+                    break;
+                case '2':
+                    return 'Condom';
+                    break;
+                case '3':
+                    return 'Birth Control';
+                    break;
+                case '4':
+                    return 'No Protection';
+                    break;
+            }
+        }
+
+        function ScanResults() {
+            window.location.href = 'scan_results.html?t=' + getParameterByName('t') + '&preview=' + getParameterByName('preview') + '&qr=' + document.getElementById('lblQRString').innerText;
+        }
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+    <!-- This is a wide open CSP declaration. To lock this down for production, see below. -->
+    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" />
+    <!-- Good default declaration:
+    * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+    * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+    * Disables use of eval() and inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+        * Enable inline JS: add 'unsafe-inline' to default-src
+        * Enable eval(): add 'unsafe-eval' to default-src
+    * Create your own at http://cspisawesome.com
+    -->
+    <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: 'unsafe-inline' https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *" /> -->
+
+    <link rel="stylesheet" type="text/css" href="css/app.css" />
+    <title>YTS</title>
+
+    <style>
+        body {
+            background-image: url(img/MoodBackgroundPg2mood.png);
+            background-size: cover; /* <------ */
+            background-repeat: no-repeat;
+            background-position: center center; /* optional, center the image */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="center-div">
+        <table style="width: 100%; height: 100%;" cellpadding="1" cellspacing="2">
+            <tr style="background-color: #1b314b;">
+                <td style="vertical-align: bottom; height: 30px; width: 50px;">
+                    <a href="javascript:GoBack();" class="linkButton">
+                        <img src="img/backarrow.png" style="height: 30px;" /></a>
+                </td>
+                <td style="text-align: center;"><span id="lblPartner1Mood"></span>
+                    <img id="imgDoubleArrow" src="img/double_arrow.png" style="height: 15px;" /><span id="lblPartner2Mood"></span></td>
+            </tr>
+            <tr>
+                <td colspan="2" style="height: 20px;">&nbsp;</td>
+            </tr>
+            <tr>
+                <td colspan="2" style="text-align: center; vertical-align: top;">Confirm all these facts:</td>
+            </tr>
+            <tr>
+                <td colspan="2" style="vertical-align: top; font-size: 13pt; font-weight: lighter;">
+                    <ul>
+                        <li>We are of the age of consent, 16 or older.</li>
+                        <li>Neither of us are: asleep or passed out, mentally incapacitated, physically helpless, or too intoxicated to CONSENT.</li>
+                        <li>If anything changes or hurts, we will speak up right away saying: &quot;NO&quot;, &quot;STOP&quot;, or our safe words, and we both agree to stop the activity.</li>
+                        <li>Each of us are voluntarily and consciously consenting without being coerced.</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" style="vertical-align: bottom;">
+                    <table>
+                        <tr>
+                            <td colspan="2">
+                                <img src="img/White_Strip.png" style="height: 5px; width: 100%;" /></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <table align="center">
+                                    <tr>
+                                        <td style="vertical-align: bottom;">
+                                            <table>
+                                                <tr>
+                                                    <td style="text-align: center;"><a href="javascript:UpdateConsent(true);" class="linkButton">
+                                                        <img id="imgConsentYes" src="img/DoubleSide_BlueHeart_Text.png" style="width: 88px;" />
+                                                    </a></td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="text-align: center;"><span id="lblYesText"></span></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td style="width: 30px;">&nbsp;</td>
+                                        <td style="vertical-align: bottom;">
+                                            <table>
+                                                <tr>
+                                                    <td style="text-align: center;"><a href="javascript:UpdateConsent(false);" class="linkButton">
+                                                        <img id="imgConsentNo" src="img/button_no.png" />
+                                                    </a></td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="text-align: center; font-weight: 100;"><span id="lblNoText"></span></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <img src="img/White_Strip.png" style="height: 5px; width: 100%;" /></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+
+    <script type="text/javascript">
+        (function () {
+            document.getElementById('lblPartner1Mood').innerText = GetMood(1, localStorage.getItem('yts_Partner1Mood'));
+            document.getElementById('lblPartner2Mood').innerText = GetMood(2, localStorage.getItem('yts_Partner2Mood'));
+
+            // set the images for the buttons based on single or multiple phones
+            if (getParameterByName('t') == 'multiple') {
+                document.getElementById('lblYesText').innerHTML = 'I Consent<br/>Continue';
+                document.getElementById('lblNoText').innerHTML = "I Can't Consent<br/>Close App";
+            } else {
+                document.getElementById('lblYesText').innerHTML = 'We Consent<br/>Continue';
+                document.getElementById('lblNoText').innerHTML = "We Can't Consent<br/>Close App";
+            }
+
+            // hide partner 2 on the header if we are working with multiple phones
+            if (getParameterByName('t') == 'multiple') {
+                document.getElementById('imgDoubleArrow').style.display = 'none';
+                document.getElementById('lblPartner2Mood').style.display = 'none';
+            }
+        })();
+
+        function GoBack() {
+            var url = '';
+            if (getParameterByName('t') == 'single') {
+                url = 'moods_single.html';
+            } else { url = 'moods_multiple.html'; }
+            window.location.href = url + '?t=' + getParameterByName('t') + '&preview=' + getParameterByName('preview');
+        }
+
+        function GetMood(partner, mood) {
+            switch (mood) {
+                case '1':
+                    if (partner == 1) { return 'Turned On' } else { return 'Heavenly' }
+                    break;
+                case '2':
+                    if (partner == 1) { return 'Cuddly' } else { return 'Happy' }
+                    break;
+                case '3':
+                    if (partner == 1) { return 'Playful' } else { return 'Seductive' }
+                    break;
+                case '4':
+                    if (partner == 1) { return 'Not Interested' } else { return 'Not Interested' }
+                    break;
+            }
+        }
+
+        function UpdateConsent(agree) {
+            if (agree) {
+                window.location.href = 'protection.html?t=' + getParameterByName('t') + '&preview=' + getParameterByName('preview');
+            } else {
+                window.location.href = 'no_consent.html?t=facts&preview=' + getParameterByName('preview');
+            }
+        }
+
+    </script>
+</body>
+
+</html>

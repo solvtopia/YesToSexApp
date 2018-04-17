@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+    <!-- This is a wide open CSP declaration. To lock this down for production, see below. -->
+    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" />
+    <!-- Good default declaration:
+    * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+    * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+    * Disables use of eval() and inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+        * Enable inline JS: add 'unsafe-inline' to default-src
+        * Enable eval(): add 'unsafe-eval' to default-src
+    * Create your own at http://cspisawesome.com
+    -->
+    <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: 'unsafe-inline' https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *" /> -->
+
+    <link rel="stylesheet" type="text/css" href="css/app.css" />
+    <title>YTS</title>
+
+    <style>
+        body {
+            background-image: url(img/MoodBackgroundPg2.png);
+            background-size: cover; /* <------ */
+            background-repeat: no-repeat;
+            background-position: center center; /* optional, center the image */
+        }
+
+        .container {
+            position: relative;
+            text-align: center;
+        }
+
+        .centered {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="center-div">
+        <table style="width: 100%; height: 100%;" cellpadding="1" cellspacing="2">
+            <tr style="background-color: #1b314b;">
+                <td style="vertical-align: top; height: 30px; width: 50px;">
+                    <a href="javascript:GoBack();" class="linkButton">
+                        <img src="img/backarrow.png" style="height: 30px;" /></a>
+                </td>
+                <td style="text-align: center;"><span id="lblPartner1Mood"></span>
+                    <img id="imgDoubleArrow" src="img/double_arrow.png" style="height: 15px;" /><span id="lblPartner2Mood"></span>
+                    <br />
+                    <span id="lblProtection"></span></td>
+            </tr>
+            <tr>
+                <td colspan="2" style="vertical-align: top;">
+                    <img id="imgPartner" src="" style="width: 100%;" /></td>
+            </tr>
+            <tr>
+                <td colspan="2" style="vertical-align: top; text-align: center;">Recording Your Decision Now<br />
+                    <br />
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" style="vertical-align: top; font-size: 13pt; font-weight: lighter;">
+                    <table align="center">
+                        <tr>
+                            <td style="text-align: center;">Please read this aloud:</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center; color: #122c45;">
+                                <div class="container">
+                                    <img src="img/message_bubble.png" style="width: 70%;">
+                                    <div class="centered" style="font-weight: bold;">"I'm Saying YES!<br />
+                                        Our safe words are:<br />
+                                        <span id="lblSafeWords">Something</span></div>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" style="vertical-align: middle; background-color: #122c45;">
+                    <table align="center">
+                        <tr>
+                            <td style="vertical-align: top; text-align: center;">Recording&nbsp;&nbsp;<span id="lblRecordingTime">(00:00)</span></td>
+                            <td rowspan="3" style="vertical-align: middle;">
+                                <img id="imgPassPhone" src="img/pass-phone300R_text.png" style="height: 100px;" /></td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: top; text-align: center;"><a href="javascript:RecordConsent();" class="linkButton">
+                                <img src="img/Stop75x75_150R.png" style="height: 80px;" /></a></td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: top; text-align: center;">Stop and Save</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+
+    <script type="text/javascript">
+        (function () {
+            document.getElementById('lblPartner1Mood').innerText = GetMood(1, localStorage.getItem('yts_Partner1Mood'));
+            document.getElementById('lblPartner2Mood').innerText = GetMood(2, localStorage.getItem('yts_Partner2Mood'));
+            document.getElementById('lblProtection').innerText = GetProtection(localStorage.getItem('yts_Protection'));
+
+            document.getElementById('imgPartner').src = 'img/MoodPartner' + getParameterByName('p') + '.png';
+
+            // hide the "pass to partner" image if we're working with multiple phones or if we're on partner 2
+            if (getParameterByName('p') == '2' || getParameterByName('t') == 'multiple') {
+                document.getElementById('imgPassPhone').style.display = 'none';
+            }
+
+            // hide partner 2 on the header if we are working with multiple phones
+            if (getParameterByName('t') == 'multiple') {
+                document.getElementById('imgDoubleArrow').style.display = 'none';
+                document.getElementById('lblPartner2Mood').style.display = 'none';
+                document.getElementById('imgPartner').style.display = 'none';
+            }
+        })();
+
+        function GoBack() {
+            var url = '';
+            if (getParameterByName('t') == 'single') {
+                url = 'moods_single.html';
+            } else { url = 'moods_multiple.html'; }
+            window.location.href = url + '?t=' + getParameterByName('t') + '&preview=' + getParameterByName('preview');
+        }
+
+        function GetMood(partner, mood) {
+            switch (mood) {
+                case '1':
+                    if (partner == 1) { return 'Turned On' } else { return 'Heavenly' }
+                    break;
+                case '2':
+                    if (partner == 1) { return 'Cuddly' } else { return 'Happy' }
+                    break;
+                case '3':
+                    if (partner == 1) { return 'Playful' } else { return 'Seductive' }
+                    break;
+                case '4':
+                    if (partner == 1) { return 'Not Interested' } else { return 'Not Interested' }
+                    break;
+            }
+        }
+
+        function GetProtection(t) {
+            switch (t) {
+                case '1':
+                    return 'Condom & Birth Control';
+                    break;
+                case '2':
+                    return 'Condom';
+                    break;
+                case '3':
+                    return 'Birth Control';
+                    break;
+                case '4':
+                    return 'No Protection';
+                    break;
+            }
+        }
+
+        function RecordConsent(rec) {
+            if (getParameterByName('p') == '1') {
+                // save the recording here
+
+                if (getParameterByName('t') == 'multiple') {
+                    // move the user to the QR code
+                    window.location.href = 'pair_me_up.html?t=' + getParameterByName('t') + '&preview=' + getParameterByName('preview');
+                } else {
+                    // setup for partner 2
+                    window.location.href = 'ready_to_record.html?t=' + getParameterByName('t') + '&preview=' + getParameterByName('preview') + '&p=2';
+                }
+            } else {
+                // both have recorded so send them to the submit page
+                window.location.href = 'submit_consent.html?t=' + getParameterByName('t') + '&preview=' + getParameterByName('preview');
+            }
+        }
+
+    </script>
+</body>
+
+</html>

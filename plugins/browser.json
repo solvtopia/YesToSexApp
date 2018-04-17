@@ -63,6 +63,9 @@
     },
     "cordova-plugin-file-transfer": {
       "PACKAGE_NAME": "com.safesexconsentinc.safelysocial"
+    },
+    "phonegap-plugin-barcodescanner": {
+      "PACKAGE_NAME": "com.safesexconsentinc.yestosex"
     }
   },
   "dependent_plugins": {

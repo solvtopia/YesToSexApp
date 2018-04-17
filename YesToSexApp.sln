@@ -1,26 +1,27 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.6
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "YesToSexApp", ".", "{49AF2429-72DA-4D25-81AC-5D798A2598C3}"
 	ProjectSection(WebsiteProperties) = preProject
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
 		Debug.AspNetCompiler.VirtualPath = "/localhost_62764"
-		Debug.AspNetCompiler.PhysicalPath = "www\"
+		Debug.AspNetCompiler.PhysicalPath = "..\YesToSexApp\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_62764\"
 		Debug.AspNetCompiler.Updateable = "true"
 		Debug.AspNetCompiler.ForceOverwrite = "true"
 		Debug.AspNetCompiler.FixedNames = "false"
 		Debug.AspNetCompiler.Debug = "True"
 		Release.AspNetCompiler.VirtualPath = "/localhost_62764"
-		Release.AspNetCompiler.PhysicalPath = "www\"
+		Release.AspNetCompiler.PhysicalPath = "..\YesToSexApp\"
 		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_62764\"
 		Release.AspNetCompiler.Updateable = "true"
 		Release.AspNetCompiler.ForceOverwrite = "true"
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
 		VWDPort = "62764"
+		SlnRelativePath = "..\YesToSexApp\"
 	EndProjectSection
 EndProject
 Global
